@@ -9,6 +9,12 @@ import UIKit
 
 class CategoriesViewController: UIViewController {
 
+    private let categoriesView = CategoriesView()
+    
+    override func loadView() {
+        view = categoriesView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemTeal
