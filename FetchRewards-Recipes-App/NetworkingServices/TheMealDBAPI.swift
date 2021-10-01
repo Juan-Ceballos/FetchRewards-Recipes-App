@@ -30,4 +30,8 @@ class TheMealDBAPI {
             }
         }
     }
+    
+    public static func fetchCategoryImage() {
+        
+    }
 }

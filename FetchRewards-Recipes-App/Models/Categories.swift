@@ -11,7 +11,7 @@ struct CategoriesWrapper: Decodable {
     let categories: [Category]
 }
 
-struct Category: Decodable {
+struct Category: Decodable, Hashable {
     let idCategory: String
     let strCategory: String
     let strCategoryThumb: String
