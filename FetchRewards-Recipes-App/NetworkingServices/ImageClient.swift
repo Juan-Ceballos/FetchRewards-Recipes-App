@@ -8,7 +8,7 @@
 import UIKit
 
 struct ImageClient {
-    static func fetchImage(for urlString: String, completion: @escaping (Result<UIImage?, AppError>) -> ()) {
+    static func fetchImage(for urlString: String, completion: @escaping (Result<UIImage, AppError>) -> ()) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.badURL(urlString)))
             return
@@ -23,7 +23,7 @@ struct ImageClient {
                 if let image = UIImage(data: data) {
                     completion(.success(image))
                 } else {
-                    completion(.failure(.noData))
+                    completion(.failure(.badURL(urlString)))
                 }
                 
             }

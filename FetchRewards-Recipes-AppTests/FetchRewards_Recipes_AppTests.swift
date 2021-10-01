@@ -58,7 +58,23 @@ class FetchRewards_Recipes_AppTests: XCTestCase {
                 XCTFail("\(error)")
             case .success(let image):
                 exp.fulfill()
-                XCTAssertEqual(image!.size.width, 320)
+                XCTAssertEqual(image.size.width, 320)
+            }
+        }
+        wait(for: [exp], timeout: 5.0)
+    }
+    
+    func testFetchMealsFromCategory() {
+        let exp = XCTestExpectation(description: "Meals array based on category")
+        let numberOfMealsInBeefCategory = 42
+        TheMealDBAPI.fetchMealsFromCategory(categoryStr: "beef") { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+                XCTFail("\(error)")
+            case .success(let mealsInCategory):
+                exp.fulfill()
+                XCTAssertEqual(mealsInCategory.count, numberOfMealsInBeefCategory)
             }
         }
         wait(for: [exp], timeout: 5.0)

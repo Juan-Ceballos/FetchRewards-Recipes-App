@@ -20,7 +20,7 @@ class CategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = .systemBackground
         configureCV()
         configureDataSource()
     }
@@ -35,8 +35,18 @@ class CategoriesViewController: UIViewController {
                 fatalError()
             }
             cell.categoryLabel.text = item.strCategory
-            cell.categoryImageView.image = UIImage(systemName: "book")
-            
+            cell.backgroundColor = .systemOrange
+            let itemThumbStr = item.strCategoryThumb
+            ImageClient.fetchImage(for: itemThumbStr) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        cell.categoryImageView.image = image
+                    }
+                }
+            }            
             return cell
         })
         
