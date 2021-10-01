@@ -29,4 +29,22 @@ class FetchRewards_Recipes_AppTests: XCTestCase {
         
         wait(for: [exp], timeout: 5.0)
     }
+    
+    func testFetchCategories() {
+        let exp = XCTestExpectation(description: "Categories Fetched")
+        let numberOfCategories = 14
+        
+        TheMealDBAPI.fetchCategories { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+                XCTFail("\(error)")
+            case .success(let categories):
+                exp.fulfill()
+                XCTAssertEqual(categories.count, numberOfCategories)
+            }
+        }
+        
+        wait(for: [exp], timeout: 5.0)
+    }
 }
