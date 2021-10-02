@@ -74,7 +74,7 @@ extension CategoriesViewController: UICollectionViewDelegate {
             fatalError()
         }
         
-        let mealsVC = MealsViewController()
+        let mealsVC = MealsViewController(currentCategory: currentCategory.strCategory)
         self.navigationController?.pushViewController(mealsVC, animated: false)
     }
 }
