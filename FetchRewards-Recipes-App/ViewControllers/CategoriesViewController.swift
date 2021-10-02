@@ -42,7 +42,7 @@ class CategoriesViewController: UIViewController {
             ImageClient.fetchImage(for: itemThumbStr) { (result) in
                 switch result {
                 case .failure(let error):
-                    print(error)
+                    self.showAlert(title: "Failed to Show Image", message: "\(error)")
                 case .success(let image):
                     DispatchQueue.main.async {
                         cell.categoryImageView.image = image
@@ -53,14 +53,14 @@ class CategoriesViewController: UIViewController {
         })
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Category>()
-        TheMealDBAPI.fetchCategories { (result) in
+        TheMealDBAPI.fetchCategories { [weak self] (result) in
             switch result {
             case .failure(let error):
-                print(error)
+                self?.showAlert(title: "Failed to Retrieve Categories", message: "\(error)")
             case .success(let categories):
                 snapshot.appendSections([.main])
                 snapshot.appendItems(categories)
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
     }

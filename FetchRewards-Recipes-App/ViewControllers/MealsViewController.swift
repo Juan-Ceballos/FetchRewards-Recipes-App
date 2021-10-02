@@ -9,8 +9,8 @@ import UIKit
 
 class MealsViewController: UIViewController {
     
-    let currentCategory: String
-    let mealsView = MealsView()
+    private let currentCategory: String
+    private let mealsView = MealsView()
     private typealias DataSource = UICollectionViewDiffableDataSource<MealSection, Meal>
     private var dataSource: DataSource!
     
@@ -32,6 +32,7 @@ class MealsViewController: UIViewController {
         view.backgroundColor = .systemBackground
         configureCV()
         configureDataSource()
+        navigationItem.title = currentCategory
     }
     
     private func configureCV() {
@@ -47,13 +48,13 @@ class MealsViewController: UIViewController {
             cell.mealNameLabel.text = item.strMeal
             cell.backgroundColor = .systemOrange
             let itemThumbStr = item.strMealThumb
-            ImageClient.fetchImage(for: itemThumbStr) { (result) in
+            ImageClient.fetchImage(for: itemThumbStr) { [weak cell] (result) in
                 switch result {
                 case .failure(let error):
-                    print(error)
+                    self.showAlert(title: "Failed to Show Image", message: "\(error)")
                 case .success(let image):
                     DispatchQueue.main.async {
-                        cell.mealImageView.image = image
+                        cell?.mealImageView.image = image
                     }
                 }
             }
@@ -61,14 +62,14 @@ class MealsViewController: UIViewController {
         })
         
         var snapshot = NSDiffableDataSourceSnapshot<MealSection, Meal>()
-        TheMealDBAPI.fetchMealsFromCategory(categoryStr: currentCategory) { (result) in
+        TheMealDBAPI.fetchMealsFromCategory(categoryStr: currentCategory) { [weak self] (result) in
             switch result {
             case .failure(let error):
-                print(error)
+                self?.showAlert(title: "Failed to Retrieve Meals", message: "\(error)")
             case .success(let meals):
                 snapshot.appendSections([.main])
                 snapshot.appendItems(meals)
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
     }
@@ -81,7 +82,7 @@ extension MealsViewController: UICollectionViewDelegate {
             fatalError()
         }
         
-        //let mealsVC = MealsViewController(currentCategory: currentCategory.strCategory)
-        //self.navigationController?.pushViewController(mealsVC, animated: false)
+        let mealDetailVC = MealDetailViewController(currentMeal: currentMeal)
+        self.navigationController?.pushViewController(mealDetailVC, animated: false)
     }
 }

@@ -55,4 +55,28 @@ class TheMealDBAPI {
             }
         }
     }
+    
+    public static func fetchMealFromId(idStr: String, completion: @escaping (Result<Meal, AppError>) -> ()) {
+        let urlString = Endpoints.mealById + "\(idStr)"
+        guard let url = URL(string: urlString) else {
+            completion(.failure(.badURL(urlString)))
+            return
+        }
+        let request = URLRequest(url: url)
+        NetworkHelper.shared.performDataTask(request: request) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+                completion(.failure(.networkClientError(error)))
+            case .success(let data):
+                do {
+                    let mealsInCategoryWrapper = try JSONDecoder().decode(MealsInCategoryWrapper.self, from: data)
+                    let mealById = mealsInCategoryWrapper.meals[0]
+                    completion(.success(mealById))
+                } catch {
+                    completion(.failure(.decodingError(error)))
+                }
+            }
+        }
+    }
 }

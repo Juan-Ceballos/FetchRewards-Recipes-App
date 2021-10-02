@@ -1,5 +1,5 @@
 //
-//  MealCell.swift
+//  MealDetailView.swift
 //  FetchRewards-Recipes-App
 //
 //  Created by Juan Ceballos on 10/2/21.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class MealCell: UICollectionViewCell {
+class MealDetailView: UIView {
     
-    static let reuseIdentifier = "mealCell"
     let padding: CGFloat = 8
-    let heightMultiplier: CGFloat = 0.7
+    let ivHeightMultiplier: CGFloat = 0.4
+    let tvHeightMultiplier: CGFloat = 0.2
     
     public var mealNameLabel: UILabel = {
         let label = UILabel()
@@ -23,6 +23,12 @@ class MealCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         return iv
+    }()
+    
+    public var mealInstrunctionsTextView: UITextView = {
+        let tv = UITextView()
+        tv.font = UIFont.preferredFont(forTextStyle: .body)
+        return tv
     }()
         
     override init(frame: CGRect) {
@@ -38,6 +44,7 @@ class MealCell: UICollectionViewCell {
     private func commonInit()   {
         setupmealNameLabelConstraints()
         setupCategoryImageViewConstraints()
+        setupMealInstructionsTextViewConstraints()
     }
     
     private func setupmealNameLabelConstraints() {
@@ -46,7 +53,7 @@ class MealCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             mealNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             mealNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
-            mealNameLabel.topAnchor.constraint(equalTo: self.topAnchor)
+            mealNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
@@ -55,10 +62,20 @@ class MealCell: UICollectionViewCell {
         mealImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mealImageView.topAnchor.constraint(equalTo: mealNameLabel.bottomAnchor, constant: padding),
-            mealImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding),
-            mealImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightMultiplier),
-            mealImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            mealImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            mealImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: ivHeightMultiplier),
+            mealImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
+            mealImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding)
+        ])
+    }
+    
+    private func setupMealInstructionsTextViewConstraints() {
+        addSubview(mealInstrunctionsTextView)
+        mealInstrunctionsTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mealInstrunctionsTextView.topAnchor.constraint(equalTo: mealImageView.bottomAnchor, constant: padding),
+            mealInstrunctionsTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            mealInstrunctionsTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            mealInstrunctionsTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: tvHeightMultiplier)
         ])
     }
     
