@@ -23,6 +23,7 @@
 		3EDABCAC27077FEF0058646E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCAB27077FEF0058646E /* CategoryCell.swift */; };
 		3EDABCB12707A0100058646E /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCB02707A00F0058646E /* ImageClient.swift */; };
 		3EDABCB62707BA3A0058646E /* MealsInCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCB52707BA3A0058646E /* MealsInCategory.swift */; };
+		3EDABCC3270820520058646E /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCC2270820520058646E /* MealsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		3EDABCAB27077FEF0058646E /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		3EDABCB02707A00F0058646E /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
 		3EDABCB52707BA3A0058646E /* MealsInCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsInCategory.swift; sourceTree = "<group>"; };
+		3EDABCC2270820520058646E /* MealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				3EDABC42270645F50058646E /* CategoriesViewController.swift */,
+				3EDABCC2270820520058646E /* MealsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 			files = (
 				3EDABC43270645F50058646E /* CategoriesViewController.swift in Sources */,
 				3EDABCB12707A0100058646E /* ImageClient.swift in Sources */,
+				3EDABCC3270820520058646E /* MealsViewController.swift in Sources */,
 				3EDABC99270655090058646E /* CategoriesView.swift in Sources */,
 				3EDABCB62707BA3A0058646E /* MealsInCategory.swift in Sources */,
 				3EDABC82270651DB0058646E /* Secrets.swift in Sources */,

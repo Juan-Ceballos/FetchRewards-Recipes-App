@@ -18,6 +18,7 @@ class CategoryCell: UICollectionViewCell {
     
     public lazy var categoryImageView: UIImageView = {
         let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
         return iv
     }()
         
@@ -51,7 +52,8 @@ class CategoryCell: UICollectionViewCell {
         categoryImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             categoryImageView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 8),
-            categoryImageView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            categoryImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
+            categoryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
             categoryImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             categoryImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])

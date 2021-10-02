@@ -21,12 +21,14 @@ class CategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationItem.title = "Categories"
         configureCV()
         configureDataSource()
     }
     
     private func configureCV() {
         categoriesView.cv.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        categoriesView.cv.delegate = self
     }
     
     private func configureDataSource() {
@@ -64,5 +66,16 @@ class CategoriesViewController: UIViewController {
     }
     
     
+}
+
+extension CategoriesViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let currentCategory = dataSource.itemIdentifier(for: indexPath) else {
+            fatalError()
+        }
+        
+        let mealsVC = MealsViewController()
+        self.navigationController?.pushViewController(mealsVC, animated: false)
+    }
 }
 
