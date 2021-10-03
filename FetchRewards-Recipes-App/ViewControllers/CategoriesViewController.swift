@@ -10,7 +10,8 @@ import UIKit
 class CategoriesViewController: UIViewController {
 
     private let categoriesView = CategoriesView()
-    
+    let categories = APIClient<CategoriesWrapper>()
+
     override func loadView() {
         view = categoriesView
     }

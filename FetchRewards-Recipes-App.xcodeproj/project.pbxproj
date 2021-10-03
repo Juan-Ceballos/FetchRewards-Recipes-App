@@ -29,6 +29,7 @@
 		3EDABCD227089E680058646E /* MealDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCD127089E680058646E /* MealDetailViewController.swift */; };
 		3EDABCD727089E780058646E /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCD627089E780058646E /* MealDetailView.swift */; };
 		3EDABCE32709231A0058646E /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCE22709231A0058646E /* UIViewController+Alerts.swift */; };
+		3EDABCE827092D740058646E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDABCE727092D730058646E /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		3EDABCD127089E680058646E /* MealDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewController.swift; sourceTree = "<group>"; };
 		3EDABCD627089E780058646E /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		3EDABCE22709231A0058646E /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
+		3EDABCE727092D730058646E /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				3EDABC8D270654B90058646E /* AppError.swift */,
 				3EDABC92270654D30058646E /* NetworkHelper.swift */,
 				3EDABC9D27065BE90058646E /* TheMealDBAPI.swift */,
+				3EDABCE727092D730058646E /* APIClient.swift */,
 				3EDABCB02707A00F0058646E /* ImageClient.swift */,
 			);
 			path = NetworkingServices;
@@ -361,6 +364,7 @@
 				3EDABCC3270820520058646E /* MealsViewController.swift in Sources */,
 				3EDABC99270655090058646E /* CategoriesView.swift in Sources */,
 				3EDABCB62707BA3A0058646E /* MealsInCategory.swift in Sources */,
+				3EDABCE827092D740058646E /* APIClient.swift in Sources */,
 				3EDABC82270651DB0058646E /* Secrets.swift in Sources */,
 				3EDABCE32709231A0058646E /* UIViewController+Alerts.swift in Sources */,
 				3EDABC8E270654B90058646E /* AppError.swift in Sources */,
