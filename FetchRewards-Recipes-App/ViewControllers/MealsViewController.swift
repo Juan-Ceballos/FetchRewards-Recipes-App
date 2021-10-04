@@ -48,30 +48,41 @@ class MealsViewController: UIViewController {
             cell.mealNameLabel.text = item.strMeal
             cell.backgroundColor = .systemOrange
             let itemThumbStr = item.strMealThumb
-            ImageClient.fetchImage(for: itemThumbStr) { [weak cell] (result) in
+            ImageClient.fetchImage2(for: itemThumbStr) { [weak cell] (result) in
                 switch result {
                 case .failure(let error):
                     self.showAlert(title: "Failed to Show Image", message: "\(error)")
                 case .success(let image):
-                    DispatchQueue.main.async {
-                        cell?.mealImageView.image = image
-                    }
+                    cell?.mealImageView.image = image
                 }
             }
             return cell
         })
         
         var snapshot = NSDiffableDataSourceSnapshot<MealSection, Meal>()
-        TheMealDBAPI.fetchMealsFromCategory(categoryStr: currentCategory) { [weak self] (result) in
+        
+        let mealsFromCategory = APIClient<MealsInCategoryWrapper>()
+        mealsFromCategory.fetch(url: Endpoints.mealsFromCategory + "\(currentCategory)") { [weak self] (result) in
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Retrieve Meals", message: "\(error)")
             case .success(let meals):
                 snapshot.appendSections([.main])
-                snapshot.appendItems(meals)
+                snapshot.appendItems(meals.meals)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
+        
+//        TheMealDBAPI.fetchMealsFromCategory(categoryStr: currentCategory) { [weak self] (result) in
+//            switch result {
+//            case .failure(let error):
+//                self?.showAlert(title: "Failed to Retrieve Meals", message: "\(error)")
+//            case .success(let meals):
+//                snapshot.appendSections([.main])
+//                snapshot.appendItems(meals)
+//                self?.dataSource.apply(snapshot, animatingDifferences: false)
+//            }
+//        }
     }
    
 }

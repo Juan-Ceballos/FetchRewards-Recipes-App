@@ -40,30 +40,39 @@ class CategoriesViewController: UIViewController {
             cell.categoryLabel.text = item.strCategory
             cell.backgroundColor = .systemOrange
             let itemThumbStr = item.strCategoryThumb
-            ImageClient.fetchImage(for: itemThumbStr) { (result) in
+            ImageClient.fetchImage2(for: itemThumbStr) { [weak cell] (result) in
                 switch result {
                 case .failure(let error):
                     self.showAlert(title: "Failed to Show Image", message: "\(error)")
                 case .success(let image):
-                    DispatchQueue.main.async {
-                        cell.categoryImageView.image = image
-                    }
+                    cell?.categoryImageView.image = image
                 }
             }            
             return cell
         })
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Category>()
-        TheMealDBAPI.fetchCategories { [weak self] (result) in
+        let categories = APIClient<CategoriesWrapper>()
+        categories.fetch(url: Endpoints.categoriesEP) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Retrieve Categories", message: "\(error)")
             case .success(let categories):
                 snapshot.appendSections([.main])
-                snapshot.appendItems(categories)
+                snapshot.appendItems(categories.categories)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
+//        TheMealDBAPI.fetchCategories { [weak self] (result) in
+//            switch result {
+//            case .failure(let error):
+//                self?.showAlert(title: "Failed to Retrieve Categories", message: "\(error)")
+//            case .success(let categories):
+//                snapshot.appendSections([.main])
+//                snapshot.appendItems(categories)
+//                self?.dataSource.apply(snapshot, animatingDifferences: false)
+//            }
+//        }
     }
     
     

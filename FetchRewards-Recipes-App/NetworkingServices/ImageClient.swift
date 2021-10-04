@@ -31,7 +31,6 @@ struct ImageClient {
     }
     
     static func fetchImage2(for urlString: String, completion: @escaping (Result<UIImage?, AppError>) -> ()) {
-        
         guard let url = URL(string: urlString) else {
             completion(.failure(.badURL(urlString)))
             return
@@ -59,7 +58,10 @@ struct ImageClient {
             
             if let data = data {
                 let image  = UIImage(data: data)
-                completion(.success(image))
+                DispatchQueue.main.async {
+                    completion(.success(image))
+                }
+                
             }
         }
         dataTask.resume()

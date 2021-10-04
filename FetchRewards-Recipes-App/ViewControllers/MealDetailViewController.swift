@@ -33,30 +33,40 @@ class MealDetailViewController: UIViewController {
     }
     
     private func loadImage() {
-        ImageClient.fetchImage(for: currentMeal.strMealThumb) { [weak self] (result) in
+        ImageClient.fetchImage2(for: currentMeal.strMealThumb) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Show Image", message: "\(error)")
             case .success(let image):
-                DispatchQueue.main.async {
-                    self?.mealDetailView.mealImageView.image = image
-                }
+                self?.mealDetailView.mealImageView.image = image
             }
         }
     }
     
     private func setupUI() {
-        TheMealDBAPI.fetchMealFromId(idStr: currentMeal.idMeal) { [weak self] (result) in
+        let mealFromId = APIClient<MealsInCategoryWrapper>()
+        mealFromId.fetch(url: Endpoints.mealById + "\(currentMeal.idMeal)") { [weak self] (result) in
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Retrieve Meal", message: "\(error)")
             case .success(let mealById):
                 DispatchQueue.main.async {
-                    self?.mealDetailView.mealNameLabel.text = mealById.strMeal
-                    self?.mealDetailView.mealInstrunctionsTextView.text = mealById.strInstructions
+                    self?.mealDetailView.mealNameLabel.text = mealById.meals[0].strMeal
+                    self?.mealDetailView.mealInstrunctionsTextView.text = mealById.meals[0].strInstructions
                 }
             }
         }
+//        TheMealDBAPI.fetchMealFromId(idStr: currentMeal.idMeal) { [weak self] (result) in
+//            switch result {
+//            case .failure(let error):
+//                self?.showAlert(title: "Failed to Retrieve Meal", message: "\(error)")
+//            case .success(let mealById):
+//                DispatchQueue.main.async {
+//                    self?.mealDetailView.mealNameLabel.text = mealById.strMeal
+//                    self?.mealDetailView.mealInstrunctionsTextView.text = mealById.strInstructions
+//                }
+//            }
+//        }
     }
 
 }
