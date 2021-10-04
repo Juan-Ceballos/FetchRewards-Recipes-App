@@ -130,4 +130,20 @@ class FetchRewards_Recipes_AppTests: XCTestCase {
         }
         wait(for: [exp], timeout: 5.0)
     }
+    
+    func testFetchImage2() {
+        let exp = XCTestExpectation(description: "Image URL Parsed")
+        let urlString = "https://www.themealdb.com/images/category/beef.png"
+        ImageClient.fetchImage2(for: urlString) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+                XCTFail("\(error)")
+            case .success(let image):
+                exp.fulfill()
+                XCTAssertEqual(image!.size.width, 320)
+            }
+        }
+        wait(for: [exp], timeout: 5.0)
+    }
 }
