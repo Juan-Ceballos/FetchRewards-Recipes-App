@@ -93,7 +93,7 @@ class MealDetailView: UIView {
             mealIngredientsMeasurementsTextView.topAnchor.constraint(equalTo: mealInstrunctionsTextView.bottomAnchor, constant: padding),
             mealIngredientsMeasurementsTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             mealIngredientsMeasurementsTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            mealInstrunctionsTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
+            mealIngredientsMeasurementsTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.1)
         ])
     }
     

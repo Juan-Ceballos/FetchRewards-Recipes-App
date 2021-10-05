@@ -56,7 +56,14 @@ class MealDetailViewController: UIViewController {
                 }
                 self?.mealDetailView.mealNameLabel.text = idMeal.strMeal
                 self?.mealDetailView.mealInstrunctionsTextView.text = idMeal.strInstructions
-                // add ing/measure
+                var str = ""
+                let x = idMeal.ingredientArr.compactMap{$0}.filter{!$0.isEmpty}
+                let y = idMeal.measuresArr.compactMap{$0}.filter{!$0.isEmpty}
+
+                for num in 0..<x.count {
+                    str += "\(x[num]), \(y[num]) \n"
+                }
+                self?.mealDetailView.mealIngredientsMeasurementsTextView.text = str
             }
         }
     }
