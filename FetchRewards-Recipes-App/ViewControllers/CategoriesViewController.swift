@@ -40,7 +40,7 @@ class CategoriesViewController: UIViewController {
             cell.categoryLabel.text = item.strCategory
             cell.backgroundColor = .systemOrange
             let itemThumbStr = item.strCategoryThumb
-            ImageClient.fetchImage2(for: itemThumbStr) { [weak cell] (result) in
+            ImageClient.fetchImage(for: itemThumbStr) { [weak cell] (result) in
                 switch result {
                 case .failure(let error):
                     self.showAlert(title: "Failed to Show Image", message: "\(error)")
@@ -57,22 +57,12 @@ class CategoriesViewController: UIViewController {
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Retrieve Categories", message: "\(error)")
-            case .success(let categories):
+            case .success(let categoriesWrapper):
                 snapshot.appendSections([.main])
-                snapshot.appendItems(categories.categories)
+                snapshot.appendItems(categoriesWrapper.categories)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
-//        TheMealDBAPI.fetchCategories { [weak self] (result) in
-//            switch result {
-//            case .failure(let error):
-//                self?.showAlert(title: "Failed to Retrieve Categories", message: "\(error)")
-//            case .success(let categories):
-//                snapshot.appendSections([.main])
-//                snapshot.appendItems(categories)
-//                self?.dataSource.apply(snapshot, animatingDifferences: false)
-//            }
-//        }
     }
     
     

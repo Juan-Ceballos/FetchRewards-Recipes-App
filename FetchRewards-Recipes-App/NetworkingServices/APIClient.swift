@@ -31,7 +31,9 @@ class APIClient<T: Decodable> {
             if let data = data {
                 do {
                     let results = try JSONDecoder().decode(T.self, from: data)
-                    completion(.success(results))
+                    DispatchQueue.main.async {
+                        completion(.success(results))
+                    }
                 } catch {
                     completion(.failure(.decodingError(error)))
                 }

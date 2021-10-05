@@ -48,10 +48,10 @@ class MealsViewController: UIViewController {
             cell.mealNameLabel.text = item.strMeal
             cell.backgroundColor = .systemOrange
             let itemThumbStr = item.strMealThumb
-            ImageClient.fetchImage2(for: itemThumbStr) { [weak cell] (result) in
+            ImageClient.fetchImage(for: itemThumbStr) { [weak cell, weak self] (result) in
                 switch result {
                 case .failure(let error):
-                    self.showAlert(title: "Failed to Show Image", message: "\(error)")
+                    self?.showAlert(title: "Failed to Show Image", message: "\(error)")
                 case .success(let image):
                     cell?.mealImageView.image = image
                 }
@@ -66,34 +66,23 @@ class MealsViewController: UIViewController {
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Retrieve Meals", message: "\(error)")
-            case .success(let meals):
+            case .success(let mealsWrapper):
                 snapshot.appendSections([.main])
-                snapshot.appendItems(meals.meals)
+                snapshot.appendItems(mealsWrapper.meals)
                 self?.dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
-        
-//        TheMealDBAPI.fetchMealsFromCategory(categoryStr: currentCategory) { [weak self] (result) in
-//            switch result {
-//            case .failure(let error):
-//                self?.showAlert(title: "Failed to Retrieve Meals", message: "\(error)")
-//            case .success(let meals):
-//                snapshot.appendSections([.main])
-//                snapshot.appendItems(meals)
-//                self?.dataSource.apply(snapshot, animatingDifferences: false)
-//            }
-//        }
     }
    
 }
 
 extension MealsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let currentMeal = dataSource.itemIdentifier(for: indexPath) else {
+        guard let selectedMeal = dataSource.itemIdentifier(for: indexPath) else {
             fatalError()
         }
         
-        let mealDetailVC = MealDetailViewController(currentMeal: currentMeal)
+        let mealDetailVC = MealDetailViewController(currentMeal: selectedMeal)
         self.navigationController?.pushViewController(mealDetailVC, animated: false)
     }
 }

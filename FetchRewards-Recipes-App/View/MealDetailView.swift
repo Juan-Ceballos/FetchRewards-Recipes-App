@@ -30,6 +30,12 @@ class MealDetailView: UIView {
         tv.font = UIFont.preferredFont(forTextStyle: .body)
         return tv
     }()
+    
+    public var mealIngredientsMeasurementsTextView: UITextView = {
+        let tv = UITextView()
+        tv.font = UIFont.preferredFont(forTextStyle: .body)
+        return tv
+    }()
         
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -45,6 +51,7 @@ class MealDetailView: UIView {
         setupmealNameLabelConstraints()
         setupCategoryImageViewConstraints()
         setupMealInstructionsTextViewConstraints()
+        setupInstructionsMeasurementsTextViewConstraints()
     }
     
     private func setupmealNameLabelConstraints() {
@@ -76,6 +83,17 @@ class MealDetailView: UIView {
             mealInstrunctionsTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             mealInstrunctionsTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             mealInstrunctionsTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: tvHeightMultiplier)
+        ])
+    }
+    
+    private func setupInstructionsMeasurementsTextViewConstraints() {
+        addSubview(mealIngredientsMeasurementsTextView)
+        mealIngredientsMeasurementsTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mealIngredientsMeasurementsTextView.topAnchor.constraint(equalTo: mealInstrunctionsTextView.bottomAnchor, constant: padding),
+            mealIngredientsMeasurementsTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            mealIngredientsMeasurementsTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            mealInstrunctionsTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ])
     }
     

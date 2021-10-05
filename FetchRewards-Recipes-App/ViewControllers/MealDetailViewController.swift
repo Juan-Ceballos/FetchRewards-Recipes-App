@@ -33,7 +33,7 @@ class MealDetailViewController: UIViewController {
     }
     
     private func loadImage() {
-        ImageClient.fetchImage2(for: currentMeal.strMealThumb) { [weak self] (result) in
+        ImageClient.fetchImage(for: currentMeal.strMealThumb) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Show Image", message: "\(error)")
@@ -50,23 +50,15 @@ class MealDetailViewController: UIViewController {
             case .failure(let error):
                 self?.showAlert(title: "Failed to Retrieve Meal", message: "\(error)")
             case .success(let mealById):
-                DispatchQueue.main.async {
-                    self?.mealDetailView.mealNameLabel.text = mealById.meals[0].strMeal
-                    self?.mealDetailView.mealInstrunctionsTextView.text = mealById.meals[0].strInstructions
+                guard let idMeal = mealById.meals.first else {
+                    self?.showAlert(title: "Error", message: "Failed to Retrive Meal Info")
+                    return
                 }
+                self?.mealDetailView.mealNameLabel.text = idMeal.strMeal
+                self?.mealDetailView.mealInstrunctionsTextView.text = idMeal.strInstructions
+                // add ing/measure
             }
         }
-//        TheMealDBAPI.fetchMealFromId(idStr: currentMeal.idMeal) { [weak self] (result) in
-//            switch result {
-//            case .failure(let error):
-//                self?.showAlert(title: "Failed to Retrieve Meal", message: "\(error)")
-//            case .success(let mealById):
-//                DispatchQueue.main.async {
-//                    self?.mealDetailView.mealNameLabel.text = mealById.strMeal
-//                    self?.mealDetailView.mealInstrunctionsTextView.text = mealById.strInstructions
-//                }
-//            }
-//        }
     }
 
 }
