@@ -63,11 +63,11 @@ class CategoryCell: UICollectionViewCell {
         categoryImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             categoryImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            categoryImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             categoryImageView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            categoryImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthMultiplier),
             categoryImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             categoryImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            categoryImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthMultiplier)
+            categoryImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     

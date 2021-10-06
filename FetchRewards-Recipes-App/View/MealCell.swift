@@ -11,12 +11,13 @@ class MealCell: UICollectionViewCell {
     
     static let reuseIdentifier = "mealCell"
     let padding: CGFloat = 8
+    let numOfLines = 0
     
-    public var mealNameLabel: UILabel = {
+    public lazy var mealNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.contentMode = .center
-        label.numberOfLines = 0
+        label.numberOfLines = numOfLines
         label.textColor = .systemBackground
         return label
     }()

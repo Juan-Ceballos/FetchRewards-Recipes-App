@@ -27,7 +27,7 @@ class MealDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemOrange
         loadImage()
         setupUI()
     }
@@ -56,14 +56,14 @@ class MealDetailViewController: UIViewController {
                 }
                 self?.mealDetailView.mealNameLabel.text = idMeal.strMeal
                 self?.mealDetailView.mealInstrunctionsTextView.text = idMeal.strInstructions
-                var str = ""
-                let x = idMeal.ingredientArr.compactMap{$0}.filter{!$0.isEmpty}
-                let y = idMeal.measuresArr.compactMap{$0}.filter{!$0.isEmpty}
+                var materials = ""
+                let ingredients = idMeal.ingredientArr.compactMap{$0}.filter{!$0.isEmpty}
+                let measurements = idMeal.measuresArr.compactMap{$0}.filter{!$0.isEmpty}
 
-                for num in 0..<x.count {
-                    str += "\(x[num]), \(y[num]) \n"
+                for num in 0..<ingredients.count {
+                    materials += "\(ingredients[num]), \(measurements[num]) \n"
                 }
-                self?.mealDetailView.mealIngredientsMeasurementsTextView.text = str
+                self?.mealDetailView.mealIngredientsMeasurementsTextView.text = materials
             }
         }
     }

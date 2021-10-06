@@ -10,6 +10,13 @@ import UIKit
 class MealDetailView: UIView {
     
     let padding: CGFloat = 8
+    let detailPadding: CGFloat = 11
+    let roundRadius: CGFloat = 8
+    let numOfLines = 0
+    
+    override func layoutSubviews() {
+        detailsView.layer.cornerRadius = roundRadius
+    }
     
     public var mealImageView: UIImageView = {
         let iv = UIImageView()
@@ -17,23 +24,41 @@ class MealDetailView: UIView {
         return iv
     }()
     
-    //
+    public var detailsView: UIView = {
+        let dv = UIView()
+        dv.backgroundColor = .systemBackground
+        return dv
+    }()
     
-    public var mealNameLabel: UILabel = {
+    public lazy var mealNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.numberOfLines = numOfLines
         return label
     }()
     
     public var mealInstrunctionsTextView: UITextView = {
         let tv = UITextView()
-        tv.font = UIFont.preferredFont(forTextStyle: .body)
+        tv.textColor = .systemGray
+        tv.font = UIFont.preferredFont(forTextStyle: .footnote)
+        tv.isEditable = false
+        tv.isSelectable = false
         return tv
+    }()
+    
+    public var materialsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Materials"
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        return label
     }()
     
     public var mealIngredientsMeasurementsTextView: UITextView = {
         let tv = UITextView()
-        tv.font = UIFont.preferredFont(forTextStyle: .body)
+        tv.textColor = .systemGray
+        tv.font = UIFont.preferredFont(forTextStyle: .footnote)
+        tv.isEditable = false
+        tv.isSelectable = false
         return tv
     }()
         
@@ -49,8 +74,10 @@ class MealDetailView: UIView {
     
     private func commonInit()   {
         setupCategoryImageViewConstraints()
-        //setupmealNameLabelConstraints()
+        setupDetailsViewConstraints()
+        setupmealNameLabelConstraints()
         setupMealInstructionsTextViewConstraints()
+        setupMaterialsLabelConstraints()
         setupInstructionsMeasurementsTextViewConstraints()
     }
     
@@ -66,13 +93,24 @@ class MealDetailView: UIView {
         ])
     }
     
+    private func setupDetailsViewConstraints() {
+        addSubview(detailsView)
+        detailsView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            detailsView.topAnchor.constraint(equalTo: mealImageView.bottomAnchor, constant: padding),
+            detailsView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
+            detailsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
+            detailsView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding)
+        ])
+    }
+    
     private func setupmealNameLabelConstraints() {
         addSubview(mealNameLabel)
         mealNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mealNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            mealNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
-            mealNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding)
+            mealNameLabel.topAnchor.constraint(equalTo: detailsView.topAnchor, constant: padding),
+            mealNameLabel.leadingAnchor.constraint(equalTo: detailsView.leadingAnchor, constant: detailPadding),
+            mealNameLabel.trailingAnchor.constraint(equalTo: detailsView.trailingAnchor, constant: -detailPadding)
         ])
     }
     
@@ -81,10 +119,20 @@ class MealDetailView: UIView {
         addSubview(mealInstrunctionsTextView)
         mealInstrunctionsTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mealInstrunctionsTextView.topAnchor.constraint(equalTo: mealImageView.bottomAnchor, constant: padding),
-            mealInstrunctionsTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            mealInstrunctionsTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            mealInstrunctionsTextView.topAnchor.constraint(equalTo: mealNameLabel.bottomAnchor, constant: padding),
+            mealInstrunctionsTextView.leadingAnchor.constraint(equalTo: detailsView.leadingAnchor, constant: padding),
+            mealInstrunctionsTextView.trailingAnchor.constraint(equalTo: detailsView.trailingAnchor, constant: -padding),
             mealInstrunctionsTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightMultiplier)
+        ])
+    }
+    
+    private func setupMaterialsLabelConstraints() {
+        addSubview(materialsLabel)
+        materialsLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            materialsLabel.topAnchor.constraint(equalTo: mealInstrunctionsTextView.bottomAnchor, constant: padding),
+            materialsLabel.leadingAnchor.constraint(equalTo: detailsView.leadingAnchor, constant: detailPadding),
+            materialsLabel.trailingAnchor.constraint(equalTo: detailsView.trailingAnchor, constant: -padding)
         ])
     }
     
@@ -93,10 +141,11 @@ class MealDetailView: UIView {
         addSubview(mealIngredientsMeasurementsTextView)
         mealIngredientsMeasurementsTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mealIngredientsMeasurementsTextView.topAnchor.constraint(equalTo: mealInstrunctionsTextView.bottomAnchor, constant: padding),
-            mealIngredientsMeasurementsTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            mealIngredientsMeasurementsTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            mealIngredientsMeasurementsTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightMultiplier)
+            mealIngredientsMeasurementsTextView.topAnchor.constraint(equalTo: materialsLabel.bottomAnchor, constant: padding),
+            mealIngredientsMeasurementsTextView.leadingAnchor.constraint(equalTo: detailsView.leadingAnchor, constant: padding),
+            mealIngredientsMeasurementsTextView.trailingAnchor.constraint(equalTo: detailsView.trailingAnchor, constant: -detailPadding),
+            mealIngredientsMeasurementsTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightMultiplier),
+            mealIngredientsMeasurementsTextView.bottomAnchor.constraint(equalTo: detailsView.bottomAnchor, constant: -padding)
         ])
     }
     
