@@ -38,7 +38,6 @@ class CategoriesViewController: UIViewController {
                 fatalError()
             }
             cell.categoryLabel.text = item.strCategory
-            cell.backgroundColor = .systemOrange
             let itemThumbStr = item.strCategoryThumb
             ImageClient.fetchImage(for: itemThumbStr) { [weak cell] (result) in
                 switch result {
@@ -46,6 +45,7 @@ class CategoriesViewController: UIViewController {
                     self.showAlert(title: "Failed to Show Image", message: "\(error)")
                 case .success(let image):
                     cell?.categoryImageView.image = image
+                    cell?.backgroundImageView.image = UIImage(named: item.tableImageNames[indexPath.row])
                 }
             }            
             return cell

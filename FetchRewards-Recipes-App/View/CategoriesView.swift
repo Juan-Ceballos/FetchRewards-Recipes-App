@@ -31,7 +31,7 @@ class CategoriesView: UIView {
     }()
     
     private func createLayout() -> UICollectionViewLayout {
-        let itemInsets: CGFloat = 8
+        let itemInsets: CGFloat = 0
         let dimension: CGFloat = 1.0
         let groupHeight: CGFloat = 0.3
         let inset: CGFloat = 0
@@ -56,10 +56,10 @@ class CategoriesView: UIView {
         addSubview(cv)
         cv.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            cv.topAnchor.constraint(equalTo: self.topAnchor),
             cv.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             cv.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            cv.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            cv.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            cv.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     

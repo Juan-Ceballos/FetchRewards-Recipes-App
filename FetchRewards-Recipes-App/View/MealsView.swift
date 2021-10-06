@@ -21,17 +21,18 @@ class MealsView: UIView {
     }()
     
     private func createLayout() -> UICollectionViewLayout {
-        let itemInsets: CGFloat = 8
-        let dimension: CGFloat = 1
+        let itemInsets: CGFloat = 2
+        let fullDimension: CGFloat = 1
+        let halfDimension: CGFloat = 0.5
         let groupInset: CGFloat = 0
-        let groupHeightMultiplier: CGFloat = 0.3
+        let groupHeightMultiplier: CGFloat = 0.4
         
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(dimension), heightDimension: .fractionalHeight(dimension))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(halfDimension), heightDimension: .fractionalHeight(fullDimension))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: itemInsets, leading: itemInsets, bottom: itemInsets, trailing: itemInsets)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(dimension), heightDimension: .fractionalHeight(groupHeightMultiplier))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fullDimension), heightDimension: .fractionalHeight(groupHeightMultiplier))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: groupInset, leading: groupInset, bottom: groupInset, trailing: groupInset)
         let section = NSCollectionLayoutSection(group: group)
         let layout = UICollectionViewCompositionalLayout(section: section)
@@ -56,9 +57,9 @@ class MealsView: UIView {
         addSubview(cv)
         cv.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            cv.topAnchor.constraint(equalTo: self.topAnchor),
             cv.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             cv.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            cv.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             cv.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }

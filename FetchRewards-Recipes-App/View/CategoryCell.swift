@@ -15,12 +15,18 @@ class CategoryCell: UICollectionViewCell {
     public var categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textColor = .systemBackground
         return label
+    }()
+    
+    public lazy var backgroundImageView: UIImageView = {
+        let iv = UIImageView()
+        return iv
     }()
     
     public var categoryImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleToFill
         return iv
     }()
         
@@ -35,31 +41,43 @@ class CategoryCell: UICollectionViewCell {
     }
     
     private func commonInit()   {
-        setupCategoryLabelConstraints()
+        setupBackgroundImageView()
         setupCategoryImageViewConstraints()
+        setupCategoryLabelConstraints()
     }
     
-    private func setupCategoryLabelConstraints() {
-        addSubview(categoryLabel)
-        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setupBackgroundImageView() {
+        addSubview(backgroundImageView)
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            categoryLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
-            categoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
-            categoryLabel.topAnchor.constraint(equalTo: self.topAnchor)
+            backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     
     private func setupCategoryImageViewConstraints() {
-        let heightMultiplier: CGFloat = 0.7
+        let widthMultiplier: CGFloat = 0.5
         addSubview(categoryImageView)
         categoryImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            categoryImageView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: padding),
-            categoryImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding),
-            categoryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightMultiplier),
+            categoryImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            categoryImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            categoryImageView.heightAnchor.constraint(equalTo: self.heightAnchor),
             categoryImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            categoryImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            categoryImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            categoryImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthMultiplier)
         ])
     }
     
+    private func setupCategoryLabelConstraints() {
+        let labelTrailingPadding: CGFloat = 22
+        addSubview(categoryLabel)
+        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            categoryLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            categoryLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -labelTrailingPadding)
+        ])
+    }
 }
